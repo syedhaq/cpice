@@ -7,8 +7,7 @@ spiceob::spiceob(int initrnk,double initstepsize,int initsteps,vector<double>ini
   rnk=initrnk;
   stepsize=initstepsize;
   numsteps=initsteps;
-  curValues=new vector(initrnk);
-  nxtValues=new vector(initrnk);
+
 
 
 
@@ -26,17 +25,17 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double stepsiz
   }
 }
 
-vector<vector<double>> spiceob::fwdEuler(){
+vector< vector<double> > spiceob::fwdEuler(){
 
     //Define method here
 }
 
-vector<vector<double>> spiceob::bwdEuler(){
+vector< vector<double> > spiceob::bwdEuler(){
 
     //Define method here
 }
 
-vector<vector<double>> spiceob::trapEuler(){
+vector< vector<double> > spiceob::trapEuler(){
 
     //Define method here
 }

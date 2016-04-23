@@ -11,16 +11,16 @@ class spiceob
         spiceob(int rank,double stepsize,int steps,vector<double>initial);
         ~spiceob();
 
-        vector<vector<double>> fwdEuler();
-        vector<vector<double>> bwdEuler();
-        vector<vector<double>> trapEuler();
+        vector< vector<double> > fwdEuler();
+        vector< vector<double> > bwdEuler();
+        vector< vector<double> > trapEuler();
 
     private:
         int rnk,numsteps;
         double stepsize;
         vector<double> curValues;
         vector<double>nxtValues;
-        vector<vector<double>>allvalues;
+        vector< vector<double> >allvalues;
         vector<double> fevaluate(int rnk,vector<double>curValues,double stepsize);
 
 

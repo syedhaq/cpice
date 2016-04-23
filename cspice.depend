@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1461452155 source:c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\main.cpp
+	<iostream>
+	<vector>
+	"spiceob.h"
+
+1461452811 c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\spiceob.h
+	<iostream>
+	<vector>
+
