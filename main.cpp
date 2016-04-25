@@ -1,15 +1,17 @@
 #include <iostream>
 #include <vector>
 #include "spiceob.h"
-using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
-    vector<double>initial;
-    initial.push_back(0);
-    spiceob A(1,0.2,500,initial);
+    std::vector<double>init;
+    init.push_back(2);
+    spiceob A(1,1,5,init);
 
+    std::vector< std::vector<double> > finalv;
+    finalv=A.fwdEuler();
 
-    cout << "Hello world!" << endl;
-    return 0;
+    for(int i=0;i<5;i++){
+        cout<<(finalv[0][i])<<endl;
+    }
 }
