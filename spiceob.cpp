@@ -19,26 +19,27 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double stepsiz
 
       return nxtValues;
 
-
-
-
+  }
+  else{
+     cout<<"Warning: Rank is not 1";
+     return nxtValues;
   }
 }
 
-vector< vector<double> > spiceob::fwdEuler(){
+//vector< vector<double> > spiceob::fwdEuler(){
 
     //Define method here
-}
+//}
 
-vector< vector<double> > spiceob::bwdEuler(){
-
-    //Define method here
-}
-
-vector< vector<double> > spiceob::trapEuler(){
+//vector< vector<double> > spiceob::bwdEuler(){
 
     //Define method here
-}
+//}
+
+//vector< vector<double> > spiceob::trapEuler(){
+
+    //Define method here
+//}
 
 spiceob::~spiceob()
 {
