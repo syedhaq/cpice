@@ -14,6 +14,8 @@ class spiceob
         vector< vector<double> > fwdEuler();
         vector< vector<double> > bwdEuler();
         vector< vector<double> > trapEuler();
+        vector< vector<double> > rk34Nt();
+        vector< vector<double> > rk34T();
 
     private:
         int rnk,numsteps;
@@ -22,10 +24,11 @@ class spiceob
         vector<double>nxtValues;
         vector< vector<double> >allvalues;
         vector<double> fevaluate(int rnk,vector<double>curValues,double stepsize);
-
-
-
-
+        vector<double> addToCurrVal(vector<double>curValues,double increment);
+        vector<double> addToCurrVal(vector<double>curValues,vector<double> increment);
+        vector<double> multCurrValby(vector<double>curValues,double factor);
+        vector<double> rkDelta(vector< vector<double> > k, int order);
+    
 };
 
 #endif // SPICEOB_H

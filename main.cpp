@@ -6,10 +6,11 @@ using namespace std;
 int main()
 {
     vector<double>initial;
-    initial.push_back(0);
-    spiceob A(1,0.2,500,initial);
-
-
-    cout << "Hello world!" << endl;
+    initial.push_back(2);
+    spiceob A(1,1,5,initial);
+    vector< vector<double> >test=A.rk34Nt();
+    
+    for(int i=0;i<test.size();i++)
+        cout << "step "<<i<<" value: "<< test[i][0] << endl;
     return 0;
 }
