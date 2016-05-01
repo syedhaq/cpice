@@ -13,11 +13,13 @@ spiceob::spiceob(int initrnk,double initstepsize,int initsteps,vector<double>ini
 
 }
 
-vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double stepsize){
-  if(rnk==1){
-      nxtValues[0]=4*exp(0.8*stepsize)-0.5*curValues[0];
+vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
 
-      return nxtValues;
+
+  if(rnk==1){
+      vector<double>temp(1,0);
+      temp[0]=(4*exp(0.8*t))-(0.5*curValues[0]);
+      return temp;
 
   }
   else{
@@ -26,8 +28,27 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double stepsiz
   }
 }
 
-//vector< vector<double> > spiceob::fwdEuler(){
+vector< vector<double> > spiceob::fwdEuler(){
 
+    if (rnk==1){
+            double t=0;
+            vector< vector<double> > vec(1, vector<double>(numsteps));
+            vec[0][0]=curValues[0];
+
+        for(int i=1;i<numsteps;i++){
+
+            nxtValues=fevaluate(rnk,curValues,t);
+            curValues[0]=curValues[0]+nxtValues[0];
+            vec[0][i]=curValues[0];
+            //cout<<"t:"<<t<<"val:"<<(curValues[0])<<endl;
+            t+=stepsize;
+
+        }
+
+    return vec;
+    }
+
+}
     //Define method here
 //}
 
@@ -36,6 +57,11 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double stepsiz
     //Define method here
 //}
 
+
+//spiceob::trapEuler(){
+
+    //Define method here
+//}
 //vector< vector<double> > spiceob::trapEuler(){
 
     //Define method here

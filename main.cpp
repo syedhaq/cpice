@@ -1,9 +1,8 @@
 #include <iostream>
 #include <vector>
 #include "spiceob.h"
-using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
     vector<double>initial;
     initial.push_back(2);
