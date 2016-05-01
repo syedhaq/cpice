@@ -43,6 +43,7 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
       vector<double>temp(2,0);
       //linear circuit case
       temp[0]=-2*pow(10,8)*curValues[0]+pow(10,8)*curValues[1]+current(t)*pow(10,12);
+      //cout<<(current(t))<<" ";
       temp[1]= pow(10,8)*curValues[0]-2*pow(10,8)*curValues[1];
       return temp;
 
@@ -96,13 +97,13 @@ vector< vector<double> > spiceob::fwdEuler(){
 //}
 
 double spiceob::current(double t){
-    if ((fmod(t,20))>=0 && (fmod(t,20))<=1){
+    if ((fmod(t*pow(10,9),20))>=0 && (fmod(t*pow(10,9),20))<=1){
         return (pow(10,-4)*t);
     }
-    else if ((fmod(t,20))>1 && (fmod(t,20))<=10){
+    else if ((fmod(t*pow(10,9),20))>1 && (fmod(t*pow(10,9),20))<=10){
         return (pow(10,-4));
     }
-    else if ((fmod(t,20))>10 && (fmod(t,20))<=11){
+    else if ((fmod(t*pow(10,9),20))>10 && (fmod(t*pow(10,9),20))<=11){
         return (pow(10,-4)*-t);
     }
     else return 0;

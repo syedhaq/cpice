@@ -19,13 +19,13 @@ int main(int argc, char *argv[])
     std::vector<double>init;
     init.push_back(0);
     init.push_back(0);
-    spiceob A(2,0.2*pow(10,-9),500,init);
+    spiceob A(2,1*pow(10,-9),100,init);
 
     std::vector< std::vector<double> > finalv;
     finalv=A.fwdEuler();
 
-    for(int i=0;i<500;i++){
-        cout<<(finalv[0][i])<<endl;
+    for(int i=0;i<100;i++){
+        cout<<(finalv[0][i])<<" ";
     }
 
 }
