@@ -5,11 +5,11 @@
 
 int main(int argc, char *argv[])
 {
+    /*
     std::vector<double>init;
     init.push_back(2);
     spiceob A(1,1,5,init);
     
-    /*
     std::vector< std::vector<double> > finalv;
     finalv=A.fwdEuler();
 
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     }
      */
 
-    /*std::vector<double>init;
+    std::vector<double>init;
     init.push_back(0);
     init.push_back(0);
     spiceob A(2,1*pow(10,-9),100,init);
@@ -30,11 +30,20 @@ int main(int argc, char *argv[])
     for(int i=0;i<100;i++){
         cout<<"step "<<i<<" value: "<< finalv[0][i] <<endl;
     }
-    */
+    
     cout<<"\nRK34 Method Without Time adaptation\n";
     vector< vector<double> >test=A.rk34Nt();
     
-    for(int i=0;i<test.size();i++)
-        cout << "step "<<i<<" value: "<< test[i][0] <<endl;
+    
+    for(int i=0;i<test.size()/2;i++)
+        cout << "step "<<i<<" value: "<< test[i][0] <<" %error: "<< test[test.size()/2+i][0]<<endl;
+    
+    cout<<"\nRK34 Method With Time adaptation\n";
+    test=A.rk34T(pow(10,-1.0),pow(10,-6.0));
+    
+    for(int i=0;i<test.size()/2;i++)
+        cout << "step "<<i<<" value: "<< test[i][0] <<" %error: "<< test[test.size()/2+i][0]<<endl;
+
+    
     return 0;
 }

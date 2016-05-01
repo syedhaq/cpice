@@ -15,7 +15,7 @@ class spiceob
         vector< vector<double> > bwdEuler();
         vector< vector<double> > trapEuler();
         vector< vector<double> > rk34Nt();
-        vector< vector<double> > rk34T();
+        vector< vector<double> > rk34T(double tol1, double tol2);
 
     private:
         int rnk,numsteps;
@@ -29,7 +29,7 @@ class spiceob
         vector<double> addToCurrVal(vector<double>curValues,vector<double> increment);
         vector<double> multCurrValby(vector<double>curValues,double factor);
         vector<double> rkDelta(vector< vector<double> > k, int order);
-    
+        double norm(vector<double> input);
 };
 
 #endif // SPICEOB_H

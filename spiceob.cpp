@@ -73,8 +73,12 @@ vector< vector<double> > spiceob::fwdEuler(){
 vector< vector<double> > spiceob::rk34Nt(){
     vector<double> kinit(rnk,0);
     vector< vector<double> > k(4,kinit);
-    vector< vector<double> > results(numsteps,kinit);
+    vector< vector<double> > results(2*numsteps,kinit);
+    vector<double> rk3;
+    vector<double> rk4;
+    vector<double> e;
     results[0]=curValues;
+    results[numsteps]=kinit;
     double t=0;
     //loop for RK4 method
     for(int i=1;i<numsteps;i++){
@@ -85,22 +89,36 @@ vector< vector<double> > spiceob::rk34Nt(){
         
         k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/4)), t+3*stepsize/4);
         
-        k[3]=fevaluate(rnk, addToCurrVal(curValues,rkDelta(k,3)), t+stepsize);
+        rk3=rkDelta(k,3);
         
-        curValues=addToCurrVal(curValues,rkDelta(k,4));
-            
+        k[3]=fevaluate(rnk, addToCurrVal(curValues,rk3), t+stepsize);
+        
+        rk4=rkDelta(k,4);
+        
+        curValues=addToCurrVal(curValues,rk4);
+        
+        e=addToCurrVal(rk3,multCurrValby(rk4,-1.0));
+        
         results[i]=curValues;
+        
+        results[numsteps+i]=multCurrValby(e, 100.0);
+        
         t=t+stepsize;
     }
     curValues=results[0];
     return results;
 }
 
-vector< vector<double> > spiceob::rk34T(){
+vector< vector<double> > spiceob::rk34T(double tol1, double tol2){
     vector<double> kinit(rnk,0);
     vector< vector<double> > k(4,kinit);
-    vector< vector<double> > results(numsteps,kinit);
+    vector< vector<double> > results(2*numsteps,kinit);
+    vector<double> rk3;
+    vector<double> rk4;
+    vector<double> e;
     results[0]=curValues;
+    double initstep=stepsize;
+    results[numsteps]=kinit;
     double t=0;
     //loop for RK4 method
     for(int i=1;i<numsteps;i++){
@@ -109,17 +127,34 @@ vector< vector<double> > spiceob::rk34T(){
         
         k[1]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[0],stepsize/2)), t+stepsize/2);
         
-        k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/2)), t+3*stepsize/2);
+        k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/4)), t+3*stepsize/4);
         
-        k[3]=fevaluate(rnk, addToCurrVal(curValues,rkDelta(k,3)), t+stepsize);
+        rk3=rkDelta(k,3);
         
-        curValues=addToCurrVal(curValues,rkDelta(k,4));
+        k[3]=fevaluate(rnk, addToCurrVal(curValues,rk3), t+stepsize);
+        
+        rk4=rkDelta(k,4);
+        
+        curValues=addToCurrVal(curValues,rk4);
+        
+        e=addToCurrVal(rk3,multCurrValby(rk4,-1.0));
+        
+        //cout<<norm(e)<<", "<<norm(curValues)<<", "<<norm(e)/norm(curValues)<<"\n";
+        
+        if(norm(e)/norm(curValues)>tol1)
+            stepsize=stepsize/2;
+        else if(norm(e)/norm(curValues)<tol2)
+            stepsize=2*stepsize;
+        else
+            stepsize=stepsize;
         
         results[i]=curValues;
+        results[numsteps+i]=multCurrValby(e, 100.0);
+        
         t=t+stepsize;
     }
     curValues=results[0];
-
+    stepsize=initstep;
     return results;
 }
 
@@ -163,6 +198,14 @@ vector<double> spiceob::rkDelta(vector< vector<double> > k, int order){
     else
         std::cout<<"Error: Invalid RK order. Order must be 3 or 4";
     return delta;
+}
+
+double spiceob::norm(vector<double> input){
+    double sum=0.0;
+    for(int i=0;i<input.size();i++){
+        sum=sum+input[i]*input[i];
+    }
+    return sqrt(sum);
 }
 
 double spiceob::current(double t){
