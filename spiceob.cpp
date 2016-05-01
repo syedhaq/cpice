@@ -43,7 +43,7 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
   }
 }
 
-//vector< vector<double> > spiceob::fwdEuler(){
+vector< vector<double> > spiceob::fwdEuler(){
 
     if (rnk==1){
             double t=0;
@@ -73,10 +73,10 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
 //}
 
 
-spiceob::trapEuler(){
+//spiceob::trapEuler(){
 
     //Define method here
-}
+//}
 //vector< vector<double> > spiceob::trapEuler(){
 
     //Define method here
