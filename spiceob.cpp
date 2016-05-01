@@ -31,7 +31,7 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
 
   }
   else{
-     std::cout<<"Error: Rank is not 1";
+     std::cout<<"Error: Rank is not valid rank";
      return nxtValues;
   }
 }
@@ -83,7 +83,7 @@ vector< vector<double> > spiceob::rk34Nt(){
         
         k[1]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[0],stepsize/2)), t+stepsize/2);
         
-        k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/2)), t+3*stepsize/2);
+        k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/4)), t+3*stepsize/4);
         
         k[3]=fevaluate(rnk, addToCurrVal(curValues,rkDelta(k,3)), t+stepsize);
         
@@ -97,7 +97,29 @@ vector< vector<double> > spiceob::rk34Nt(){
 }
 
 vector< vector<double> > spiceob::rk34T(){
-    vector< vector<double> > results;
+    vector<double> kinit(rnk,0);
+    vector< vector<double> > k(4,kinit);
+    vector< vector<double> > results(numsteps,kinit);
+    results[0]=curValues;
+    double t=0;
+    //loop for RK4 method
+    for(int i=1;i<numsteps;i++){
+        //calculate ks for RK4
+        k[0]=fevaluate(rnk, curValues, t);
+        
+        k[1]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[0],stepsize/2)), t+stepsize/2);
+        
+        k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/2)), t+3*stepsize/2);
+        
+        k[3]=fevaluate(rnk, addToCurrVal(curValues,rkDelta(k,3)), t+stepsize);
+        
+        curValues=addToCurrVal(curValues,rkDelta(k,4));
+        
+        results[i]=curValues;
+        t=t+stepsize;
+    }
+    curValues=results[0];
+
     return results;
 }
 
