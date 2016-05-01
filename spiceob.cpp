@@ -69,11 +69,11 @@ vector< vector<double> > spiceob::bwdEuler(){
     //Define method here
 }
 
-vector< vector<double> > spiceob::trapEuler(){
+vector< vector<doubl
+e> > spiceob::trapEuler(){
 
     //Define method here
 }
-
 spiceob::~spiceob()
 {
     //dtor
