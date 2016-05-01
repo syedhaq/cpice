@@ -1,5 +1,6 @@
 #include "spiceob.h"
 #include <cmath>
+#include <iostream>
 
 spiceob::spiceob(int initrnk,double initstepsize,int initsteps,vector<double>initial)
 {
@@ -20,6 +21,16 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
       return temp;
 
   }
+
+  else if(rnk==2){
+      vector<double>temp(2,0);
+      //linear circuit case
+      temp[0]=-2*pow(10,8)*curValues[0]+pow(10,8)*curValues[1]+current(t)*pow(10,12);
+      //cout<<(current(t))<<" ";
+      temp[1]= pow(10,8)*curValues[0]-2*pow(10,8)*curValues[1];
+      return temp;
+
+  }
   else{
      std::cout<<"Error: Rank is not 1";
      return nxtValues;
@@ -28,16 +39,19 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
 /*
 vector< vector<double> > spiceob::fwdEuler(){
 
-    if (rnk==1){
+
             double t=0;
-            vector< vector<double> > vec(1, vector<double>(numsteps));
+            vector< vector<double> > vec(rnk, vector<double>(numsteps));
             vec[0][0]=curValues[0];
+            vec[0][1]=curValues[1];
 
         for(int i=1;i<numsteps;i++){
 
             nxtValues=fevaluate(rnk,curValues,t);
-            curValues[0]=curValues[0]+nxtValues[0];
+            curValues[0]=curValues[0]+nxtValues[0]*stepsize;
+            curValues[1]=curValues[1]+nxtValues[1]*stepsize;
             vec[0][i]=curValues[0];
+            vec[1][i]=curValues[1];
             //cout<<"t:"<<t<<"val:"<<(curValues[0])<<endl;
             t+=stepsize;
 

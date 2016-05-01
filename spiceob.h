@@ -23,6 +23,7 @@ class spiceob
         vector<double> curValues;
         vector<double>nxtValues;
         vector< vector<double> >allvalues;
+        double current (double t);
         vector<double> fevaluate(int rnk,vector<double>curValues,double stepsize);
         vector<double> addToCurrVal(vector<double>curValues,double increment);
         vector<double> addToCurrVal(vector<double>curValues,vector<double> increment);
