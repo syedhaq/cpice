@@ -36,13 +36,14 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
       temp[0]=(4*exp(0.8*t))-(0.5*curValues[0]);
       return temp;
 
-
-
-
+  }
+  else{
+     cout<<"Warning: Rank is not 1";
+     return nxtValues;
   }
 }
 
-vector< vector<double> > spiceob::fwdEuler(){
+//vector< vector<double> > spiceob::fwdEuler(){
 
     if (rnk==1){
             double t=0;
@@ -63,17 +64,24 @@ vector< vector<double> > spiceob::fwdEuler(){
     }
 
 }
+    //Define method here
+//}
 
-vector< vector<double> > spiceob::bwdEuler(){
+//vector< vector<double> > spiceob::bwdEuler(){
+
+    //Define method here
+//}
+
+
+spiceob::trapEuler(){
 
     //Define method here
 }
-
-vector< vector<doubl
-e> > spiceob::trapEuler(){
+//vector< vector<double> > spiceob::trapEuler(){
 
     //Define method here
-}
+//}
+
 spiceob::~spiceob()
 {
     //dtor
