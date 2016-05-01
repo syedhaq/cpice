@@ -4,9 +4,18 @@
 
 int main(int argc, char *argv[])
 {
-    vector<double>initial;
-    initial.push_back(2);
-    spiceob A(1,1,5,initial);
+    std::vector<double>init;
+    init.push_back(2);
+    spiceob A(1,1,5,init);
+    
+    /*
+    std::vector< std::vector<double> > finalv;
+    finalv=A.fwdEuler();
+
+    for(int i=0;i<5;i++){
+        cout<<(finalv[0][i])<<endl;
+    }
+    */
     vector< vector<double> >test=A.rk34Nt();
     
     for(int i=0;i<test.size();i++)

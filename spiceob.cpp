@@ -8,9 +8,7 @@ spiceob::spiceob(int initrnk,double initstepsize,int initsteps,vector<double>ini
   stepsize=initstepsize;
   numsteps=initsteps;
   curValues=initial;
-
-
-
+  allvalues=*new vector< vector<double> >(initsteps,initial);
 }
 
 vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
@@ -27,7 +25,7 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
      return nxtValues;
   }
 }
-
+/*
 vector< vector<double> > spiceob::fwdEuler(){
 
     if (rnk==1){
@@ -47,8 +45,9 @@ vector< vector<double> > spiceob::fwdEuler(){
 
     return vec;
     }
-
+    
 }
+*/
     //Define method here
 //}
 
@@ -68,19 +67,27 @@ vector< vector<double> > spiceob::fwdEuler(){
 //}
 
 vector< vector<double> > spiceob::rk34Nt(){
-    vector< vector<double> > k;
-    vector<double> initialVals=curValues; //saves the initial values so they don't get lost.
+    vector<double> kinit(rnk,0);
+    vector< vector<double> > k(4,kinit);
+    allvalues[0]=curValues;
+    double t=0;
     //loop for RK4 method
-    for(int i=0;i<=numsteps;i++){
+    for(int i=1;i<numsteps;i++){
         //calculate ks for RK4
-        k[0]=fevaluate(rnk, curValues, i);
-        k[1]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[0],stepsize/2)), i+stepsize/2);
-        k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/2)), i+3*stepsize/2);
-        k[3]=fevaluate(rnk, addToCurrVal(curValues,rkDelta(k,3)), i+stepsize);
-        curValues=addToCurrVal(curValues,rkDelta(k, 4));
+        k[0]=fevaluate(rnk, curValues, t);
+        
+        k[1]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[0],stepsize/2)), t+stepsize/2);
+        
+        k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/2)), t+3*stepsize/2);
+        
+        k[3]=fevaluate(rnk, addToCurrVal(curValues,rkDelta(k,3)), t+stepsize);
+        
+        curValues=addToCurrVal(curValues,rkDelta(k,4));
+            
         allvalues[i]=curValues;
+        t=t+stepsize;
     }
-    curValues=initialVals;
+    curValues=allvalues[0];
     return allvalues;
 }
 
@@ -98,7 +105,7 @@ vector<double> spiceob::addToCurrVal(vector<double>curValues,double increment){
 
 vector<double> spiceob::addToCurrVal(vector<double>curValues,vector<double> increment){
     if(curValues.size()!=increment.size()){
-        std::cout<<"Dimension Error: dimensions of both vectors must be the same!";
+        std::cout<<"Dimension Error: dimensions of both vectors must be the same!\n";
         return curValues;
     }
     for(int i=0;i<curValues.size();i++){
@@ -115,15 +122,15 @@ vector<double> spiceob::multCurrValby(vector<double>curValues,double factor){
 }
 
 vector<double> spiceob::rkDelta(vector< vector<double> > k, int order){
-    vector<double> delta;
+    vector<double> delta(rnk,0);
     if(order==3){
-        for(int i=0;i<k.size();i++){
-            delta[i]=1/9*(2*k[i][0]+3*k[i][1]+4*k[i][2])*stepsize;
+        for(int i=0;i<rnk;i++){
+            delta[i]=1.0/9.0*(2*k[0][i]+3*k[1][i]+4*k[2][i])*stepsize;
         }
     }
     else if(order==4){
-        for(int i=0;i<k.size();i++){
-            delta[i]=1/24*(7*k[i][0]+6*k[i][1]+8*k[i][2]+3*k[i][3])*stepsize;
+        for(int i=0;i<rnk;i++){
+            delta[i]=1.0/24.0*(7*k[0][i]+6*k[1][i]+8*k[2][i]+3*k[3][i])*stepsize;
         }
     }
     else
