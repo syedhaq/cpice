@@ -60,15 +60,104 @@ vector< vector<double> > spiceob::fwdEuler(){
 
 }
 
-//vector< vector<double> > spiceob::bwdEuler(){
+vector< vector<double> > spiceob::bwdEuler(){
 
-    //Define method here
-//}
+    double v1next,v2next,v1,v2;
+    double t=0;
+    vector< vector<double> > vec(rnk, vector<double>(numsteps));
 
-//vector< vector<double> > spiceob::trapEuler(){
 
-    //Define method here
-//}
+
+    vec[0][0]=curValues[0];
+    vec[1][0]=curValues[1];
+
+    for(int i=0;i<numsteps;i++){
+
+            //Used fixed point iteration to find next value
+            v1=curValues[0];
+            v2=curValues[1];
+            nxtValues[0]=curValues[0];
+            nxtValues[1]=curValues[1];
+
+
+            v1next=v1;
+            v2next=v2;
+
+
+
+            for(int i=1; i<=500;i++){
+                nxtValues=fevaluate(rnk,nxtValues,t+stepsize);
+
+                v1next=curValues[0]+stepsize*nxtValues[0];
+                v2next=curValues[1]+stepsize*nxtValues[1];
+
+                nxtValues[0]=v1next;
+                nxtValues[1]=v2next;
+
+
+            }
+
+
+            //
+            curValues[0]=nxtValues[0];
+            curValues[1]=nxtValues[1];
+            vec[0][i]=curValues[0];
+            vec[1][i]=curValues[1];
+
+
+
+
+
+
+
+
+
+
+    }
+
+    return vec;
+
+
+
+
+
+
+}
+
+vector< vector<double> > spiceob::trapEuler(){
+
+    double t=0;
+    vector< vector<double> > vec(rnk, vector<double>(numsteps));
+    vector<double>nxtIt(2,0);
+    vec[0][0]=curValues[0];
+    vec[1][0]=curValues[1];
+    double v1pred,v2pred,v1cor,v2cor;
+
+        for(int i=1;i<numsteps;i++){
+
+        nxtValues=fevaluate(rnk,curValues,t);
+        //FwdEuler
+        v1pred=curValues[0]+nxtValues[0]*stepsize;
+        v2pred=curValues[1]+nxtValues[1]*stepsize;
+
+
+        nxtIt[0]=v1pred; nxtIt[1]=v2pred;
+
+        nxtIt=fevaluate(rnk,nxtIt,t+stepsize);
+
+        curValues[0]+=(nxtValues[0]+nxtIt[0])*(stepsize/2);
+        curValues[1]+=(nxtValues[0]+nxtIt[0])*(stepsize/2);
+
+
+        vec[0][i]=curValues[0];
+        vec[1][i]=curValues[1];
+        //cout<<"t:"<<t<<"val:"<<(curValues[0])<<endl;
+        t+=stepsize;
+    }
+    return vec;
+
+
+}
 
 vector< vector<double> > spiceob::rk34Nt(){
     vector<double> kinit(rnk,0);
@@ -84,25 +173,25 @@ vector< vector<double> > spiceob::rk34Nt(){
     for(int i=1;i<numsteps;i++){
         //calculate ks for RK4
         k[0]=fevaluate(rnk, curValues, t);
-        
+
         k[1]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[0],stepsize/2)), t+stepsize/2);
-        
+
         k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/4)), t+3*stepsize/4);
-        
+
         rk3=rkDelta(k,3);
-        
+
         k[3]=fevaluate(rnk, addToCurrVal(curValues,rk3), t+stepsize);
-        
+
         rk4=rkDelta(k,4);
-        
+
         curValues=addToCurrVal(curValues,rk4);
-        
+
         e=addToCurrVal(rk3,multCurrValby(rk4,-1.0));
-        
+
         results[i]=curValues;
-        
+
         results[numsteps+i]=multCurrValby(e, 100.0);
-        
+
         t=t+stepsize;
     }
     curValues=results[0];
@@ -124,33 +213,33 @@ vector< vector<double> > spiceob::rk34T(double tol1, double tol2){
     for(int i=1;i<numsteps;i++){
         //calculate ks for RK4
         k[0]=fevaluate(rnk, curValues, t);
-        
+
         k[1]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[0],stepsize/2)), t+stepsize/2);
-        
+
         k[2]=fevaluate(rnk, addToCurrVal(curValues,multCurrValby(k[1],3*stepsize/4)), t+3*stepsize/4);
-        
+
         rk3=rkDelta(k,3);
-        
+
         k[3]=fevaluate(rnk, addToCurrVal(curValues,rk3), t+stepsize);
-        
+
         rk4=rkDelta(k,4);
-        
+
         curValues=addToCurrVal(curValues,rk4);
-        
+
         e=addToCurrVal(rk3,multCurrValby(rk4,-1.0));
-        
+
         //cout<<norm(e)<<", "<<norm(curValues)<<", "<<norm(e)/norm(curValues)<<"\n";
-        
+
         if(norm(e)/norm(curValues)>tol1)
             stepsize=stepsize/2;
         else if(norm(e)/norm(curValues)<tol2)
             stepsize=2*stepsize;
         else
             stepsize=stepsize;
-        
+
         results[i]=curValues;
         results[numsteps+i]=multCurrValby(e, 100.0);
-        
+
         t=t+stepsize;
     }
     curValues=results[0];
