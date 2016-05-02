@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
         cout<< finalv[0][i] <<endl;
     }
 
-    /*
     cout<<"\nRK34 Method Without Time adaptation\n";
     vector< vector<double> >test=A.rk34Nt();
 
@@ -39,12 +38,13 @@ int main(int argc, char *argv[])
     for(int i=0;i<test.size()/2;i++)
         cout << "step "<<i<<" value: "<< test[i][0] <<" %error: "<< test[test.size()/2+i][0]<<endl;
 
+    A=*new spiceob(2,1*pow(10,-9),100*pow(10,-9),init);
+    
     cout<<"\nRK34 Method With Time adaptation\n";
     test=A.rk34T(pow(10,-1.0),pow(10,-6.0));
 
     for(int i=0;i<test.size()/2;i++)
         cout << "step "<<i<<" value: "<< test[i][0] <<" %error: "<< test[test.size()/2+i][0]<<endl;
 
-*/
     return 0;
 }

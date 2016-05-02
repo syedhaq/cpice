@@ -8,7 +8,8 @@ using namespace std;
 class spiceob
 {
     public:
-        spiceob(int rank,double stepsize,int steps,vector<double>initial);
+        spiceob(int initrnk,double initstepsize,int initsteps,vector<double>initial);
+        spiceob(int initrnk,double initstepsize,double initstop,vector<double>initial);
         ~spiceob();
 
         vector< vector<double> > fwdEuler();
@@ -18,8 +19,8 @@ class spiceob
         vector< vector<double> > rk34T(double tol1, double tol2);
 
     private:
-        int rnk,numsteps;
-        double stepsize;
+        int rnk,numsteps, timeAdaptive;
+        double stepsize, stop;
         vector<double> curValues;
         vector<double>nxtValues;
         vector< vector<double> >allvalues;
