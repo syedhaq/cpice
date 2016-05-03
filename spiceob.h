@@ -2,6 +2,7 @@
 #define SPICEOB_H
 #include <iostream>
 #include <vector>
+#include "Model.hpp"
 
 using namespace std;
 

@@ -1,0 +1,28 @@
+Forward Euler Method
+step 0 value: 2
+step 1 value: 5
+step 2 value: 11.4022
+step 3 value: 25.5132
+step 4 value: 56.8493
+
+Trapazoid Euler Method
+step 0 value: 2
+step 1 value: 6.70108
+step 2 value: 16.3198
+step 3 value: 37.1992
+step 4 value: 83.3378
+
+RK34 Method Without Time adaptation
+step 0 value: 2
+step 1 value: 6.22581
+step 2 value: 14.9257
+step 3 value: 33.8628
+step 4 value: 75.752
+
+RK34 Method With Time adaptation
+step 0 value: 2
+step 1 value: 6.22581
+step 2 value: 14.9257
+step 3 value: 33.8628
+step 4 value: 75.752
+Program ended with exit code: 0

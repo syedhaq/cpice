@@ -22,7 +22,6 @@ spiceob::spiceob(int initrnk,double initstepsize,double initstop,vector<double>i
 
 vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
 
-    
   if(rnk==1){
       vector<double>temp(1,0);
       temp[0]=(4*exp(0.8*t))-(0.5*curValues[0]);
@@ -33,9 +32,14 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
   else if(rnk==2){
       vector<double>temp(2,0);
       //linear circuit case
-      temp[0]=-2*pow(10,8)*curValues[0]+pow(10,8)*curValues[1]+current(t)*pow(10,12);
+      //temp[0]=-2*pow(10,8)*curValues[0]+pow(10,8)*curValues[1]+current(t)*pow(10,12);
       //cout<<(current(t))<<" ";
-      temp[1]= pow(10,8)*curValues[0]-2*pow(10,8)*curValues[1];
+      //temp[1]= pow(10,8)*curValues[0]-2*pow(10,8)*curValues[1];
+      
+      //transistor circuit case
+      Model iD(curValues[1], curValues[0], 5*pow(10,-6), 0.7, 1.5, 26*pow(10,-3), 0.0);
+      temp[0]=-1*pow(10,8)*curValues[0]+pow(10,8)*current(t);
+      temp[1]= -1*pow(10,12)*iD.solveID()-2*pow(10,8)*curValues[1]+5*pow(10,8);
       return temp;
 
   }
@@ -56,7 +60,7 @@ vector< vector<double> > spiceob::fwdEuler(){
 
             nxtValues=fevaluate(rnk,curValues,t);
             curValues[0]=curValues[0]+nxtValues[0]*stepsize;
-            curValues[1]=curValues[1]+nxtValues[1]*stepsize;
+            //curValues[1]=curValues[1]+nxtValues[1]*stepsize;
             vec[0][i]=curValues[0];
             vec[1][i]=curValues[1];
             //cout<<"t:"<<t<<"val:"<<(curValues[0])<<endl;
@@ -116,7 +120,8 @@ vector< vector<double> > spiceob::bwdEuler(){
             vec[1][i]=curValues[1];
 
         }
-
+        curValues[0]=vec[0][0];
+        curValues[1]=vec[1][0];
         return vec;
     }
     else{
@@ -156,6 +161,8 @@ vector< vector<double> > spiceob::trapEuler(){
             //cout<<"t:"<<t<<"val:"<<(curValues[0])<<endl;
             t+=stepsize;
         }
+        curValues[0]=vec[0][0];
+        curValues[1]=vec[1][0];
         return vec;
     }
     else{
@@ -169,12 +176,11 @@ vector< vector<double> > spiceob::rk34Nt(){
     vector<double> kinit(rnk,0);
     vector< vector<double> > k(4,kinit);
     if(!timeAdaptive){
-        vector< vector<double> > results(2*numsteps,kinit);
+        vector< vector<double> > results(numsteps,kinit);
         vector<double> rk3;
         vector<double> rk4;
         vector<double> e;
         results[0]=curValues;
-        results[numsteps]=kinit;
         double t=0;
         //loop for RK4 method
         for(int i=1;i<numsteps;i++){
@@ -197,8 +203,6 @@ vector< vector<double> > spiceob::rk34Nt(){
 
             results[i]=curValues;
 
-            results[numsteps+i]=multCurrValby(e, 100.0);
-
             t=t+stepsize;
         }
         curValues=results[0];
@@ -213,15 +217,18 @@ vector< vector<double> > spiceob::rk34Nt(){
 vector< vector<double> > spiceob::rk34T(double tol1, double tol2){
     vector<double> kinit(rnk,0);
     vector< vector<double> > k(4,kinit);
-    int totalSteps=stop/stepsize;
+    int totalSteps;
+    if(stepsize<1*pow(10,-9))
+        totalSteps=(stop/stepsize)+1;
+    else
+        totalSteps=stop/stepsize;
     if(timeAdaptive){
-        vector< vector<double> > results(2*totalSteps,kinit);
+        vector< vector<double> > results(totalSteps,kinit);
         vector<double> rk3;
         vector<double> rk4;
         vector<double> e;
         results[0]=curValues;
         double initstep=stepsize;
-        results[numsteps]=kinit;
         double t=0;
         //loop for RK4 method
         for(int i=1;i<totalSteps;i++){
@@ -252,7 +259,6 @@ vector< vector<double> > spiceob::rk34T(double tol1, double tol2){
                 stepsize=stepsize;
 
             results[i]=curValues;
-            results[totalSteps+i]=multCurrValby(e, 100.0);
 
             t=t+stepsize;
         }
