@@ -51,15 +51,16 @@ int main(int argc, char *argv[]){
     cout<<"Simulation for 1ns step size with 100 steps\n";
     A=*new spiceob(2,1*pow(10,-9),100,init);
     
-    finalv=A.fwdEuler();
+    finalv=A.bwdEuler();
 
     cout<<"\nForward Euler Method\n";
     for(int i=0;i<100;i++){
         cout << "step "<<i<<" value: "<< finalv[1][i] <<endl;
     }
     
-    writeModel("forwardEulerTask4_1ns.txt",finalv,"hor");
+    writeModel("backwardEulerTask3_1ns.txt",finalv,"hor");
     
+    /*
     finalv=A.trapEuler();
     
     cout<<"\nTrapazoid Euler Method\n";
@@ -126,6 +127,7 @@ int main(int argc, char *argv[]){
         cout << "step "<<i<<" value: "<< test[i][0] << endl;
     
     writeModel("RK34TTask4_0.2ns.txt",test,"vert");
+    */
     return 0;
 }
 

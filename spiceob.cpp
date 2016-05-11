@@ -9,6 +9,7 @@ spiceob::spiceob(int initrnk,double initstepsize,int initsteps,vector<double>ini
     stepsize=initstepsize;
     numsteps=initsteps;
     curValues=initial;
+    nxtValues=initial;
     timeAdaptive=0;
 }
 
@@ -32,14 +33,14 @@ vector<double> spiceob::fevaluate(int rnk,vector<double>curValues,double t){
   else if(rnk==2){
       vector<double>temp(2,0);
       //linear circuit case
-      //temp[0]=-2*pow(10,8)*curValues[0]+pow(10,8)*curValues[1]+current(t)*pow(10,12);
+      temp[0]=-2*pow(10,8)*curValues[0]+pow(10,8)*curValues[1]+current(t)*pow(10,12);
       //cout<<(current(t))<<" ";
-      //temp[1]= pow(10,8)*curValues[0]-2*pow(10,8)*curValues[1];
+      temp[1]= pow(10,8)*curValues[0]-2*pow(10,8)*curValues[1];
       
       //transistor circuit case
-      Model iD(curValues[1], curValues[0], 5*pow(10,-6), 0.7, 1.5, 26*pow(10,-3), 0.0);
-      temp[0]=-1*pow(10,8)*curValues[0]+pow(10,8)*current(t);
-      temp[1]= -1*pow(10,12)*iD.solveID()-2*pow(10,8)*curValues[1]+5*pow(10,8);
+      //Model iD(curValues[1], curValues[0], 5*pow(10,-6), 0.7, 1.5, 26*pow(10,-3), 0.0);
+      //temp[0]=-1*pow(10,8)*curValues[0]+pow(10,8)*current(t);
+      //temp[1]= -1*pow(10,12)*iD.solveID()-2*pow(10,8)*curValues[1]+5*pow(10,8);
       return temp;
 
   }

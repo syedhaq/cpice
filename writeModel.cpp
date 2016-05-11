@@ -11,7 +11,7 @@
 void writeModel(string fileName, vector< vector <double> > outputValues, string direct){
     //MatDoub_IO input=parseFiles(trans, output, numTrans, numOutput);
     ofstream outfile;
-    outfile.open("/Users/kaiyuanliu/Documents/SanDisk Data (Secure)/ECE MEng Works/Spring 2016/ECE 4960 - 001 - L401/Programming Assignment 4/cspice/cspice/"+fileName);
+    outfile.open("/Users/kaiyuanliu/Documents/SanDisk Data (Secure)/ECE MEng Works/Spring 2016/ECE 4960 - 001 - L401/Programming Assignment 5/cspice/cspice/"+fileName);
     if (outfile.is_open())
     {
         outfile << "V1(t) V2(t)\n";
