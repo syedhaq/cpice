@@ -3,6 +3,7 @@
 #include "spiceob.h"
 #include <cmath>
 #include "writeModel.hpp"
+#include "functions.h"
 
 int main(int argc, char *argv[]){
     std::vector<double>init;
@@ -10,37 +11,8 @@ int main(int argc, char *argv[]){
     spiceob A(1,1,5,init);
 
     std::vector< std::vector<double> > finalv;
-    
-    /*
-    finalv=A.fwdEuler();
 
-    cout<<"\nForward Euler Method\n";
-    for(int i=0;i<5;i++){
-        cout << "step "<<i<<" value: "<< finalv[0][i] <<endl;
-    }
-    
-    finalv=A.trapEuler();
-    
-    cout<<"\nTrapazoid Euler Method\n";
-    for(int i=0;i<5;i++){
-        cout << "step "<<i<<" value: "<< finalv[0][i] <<endl;
-    }
-    
-    cout<<"\nRK34 Method Without Time adaptation\n";
-    vector< vector<double> >test=A.rk34Nt();
-    
-    
-    for(int i=0;i<test.size();i++)
-        cout << "step "<<i<<" value: "<< test[i][0] <<endl;
-    
-    A=*new spiceob(1,1,5.0,init);
-    
-    cout<<"\nRK34 Method With Time adaptation\n";
-    test=A.rk34T(pow(10,-1.0),pow(10,-6.0));
-    
-    for(int i=0;i<test.size();i++)
-        cout << "step "<<i<<" value: "<< test[i][0] <<endl;
-    */
+
     init.clear();
     init.push_back(0);
     init.push_back(0);
@@ -68,36 +40,20 @@ int main(int argc, char *argv[]){
         cout << "step "<<i<<" value: "<< finalv[1][i] <<endl;
     }
 
-    writeModel("trapazoidEulerTask4_1ns.txt",finalv,"hor");
-    
-    cout<<"\nRK34 Method Without Time adaptation\n";
     vector< vector<double> >test=A.rk34Nt();
 
 
-    for(int i=0;i<test.size();i++)
-        cout << "step "<<i<<" value: "<< test[i][1] <<endl;
 
-    A=*new spiceob(2,1*pow(10,-9),100*pow(10,-9),init);
-    
+    A=*new spiceob(2,1*pow(10,-6),40*pow(10,-6),init);
+
     writeModel("RK34NTTask4_1ns.txt",test,"vert");
-    
-    cout<<"\nRK34 Method With Time adaptation\n";
-    test=A.rk34T(pow(10,-1.0),pow(10,-6.0));
 
-    for(int i=0;i<test.size();i++)
-        cout << "step "<<i<<" value: "<< test[i][1] <<endl;
-    
-    writeModel("RK34TTask4_1ns.txt",test,"vert");
-    
-    
-    cout<<"Simulation for 0.2ns step size with 500 steps\n";
-    A=*new spiceob(2,0.2*pow(10,-9),500,init);
-    
-    finalv=A.fwdEuler();
-    
-    cout<<"\nForward Euler Method\n";
-    for(int i=0;i<100;i++){
-        cout << "step "<<i<<" value: "<< finalv[1][i] <<endl;
+    cout<<"\nRK34 Method With Time adaptation\n";
+    test=A.rk34T(pow(10,-1),pow(10,-9.0));
+
+    for (int i=0;i<test.size();i++){
+        //cout<<"Time:"<<test[i][2]<<test[i][1]<<endl;
+
     }
     
     writeModel("forwardEulerTask4_0.2ns.txt",finalv,"hor");

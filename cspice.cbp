@@ -32,11 +32,19 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="C:/Users/Syed/Documents/Coursematerials/Winter&apos;16/ECE4960/Lab3/SymbolicC++3-3.35/headers" />
+			<Add directory="C:/Users/Syed/Documents/Coursematerials/Winter&apos;16/ECE4960/cspice/SymbolicC++3-3.35/headers/symbolic" />
 		</Compiler>
+		<Unit filename="Model.cpp" />
+		<Unit filename="Model.hpp" />
+		<Unit filename="functions.cpp" />
+		<Unit filename="functions.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="main.h" />
 		<Unit filename="spiceob.cpp" />
 		<Unit filename="spiceob.h" />
+		<Unit filename="writeModel.cpp" />
+		<Unit filename="writeModel.hpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

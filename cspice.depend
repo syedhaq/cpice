@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1462243356 source:c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\main.cpp
+1462920286 source:c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\main.cpp
 	<iostream>
 	<vector>
 	"spiceob.h"
@@ -24,4 +24,109 @@
 	<fstream>
 	<iomanip>
 	<vector>
+
+1459727008 source:c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\functions.cpp
+	<iostream>
+	<math.h>
+	"vector.h"
+	"matrix.h"
+	"functions.h"
+
+1459127842 c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\symbolicc++3-3.35\headers\vector.h
+	<cassert>
+	<cmath>
+	<iostream>
+	<vector>
+	"identity.h"
+
+1459127843 c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\symbolicc++3-3.35\headers\identity.h
+	<iostream>
+	<cstdlib>
+	<complex>
+
+1459127843 c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\symbolicc++3-3.35\headers\matrix.h
+	<iostream>
+	<cmath>
+	<cassert>
+	<string>
+	<utility>
+	"identity.h"
+	"vector.h"
+
+1459725453 c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\functions.h
+	<iostream>
+	<vector>
+
+1462243356 source:c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\model.cpp
+	"Model.hpp"
+	<cmath>
+
+1462243357 source:c:\users\syed\documents\course materials\winter'16\ece 4960\cspice\writemodel.cpp
+	"writeModel.hpp"
+
+1462994925 source:c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\functions.cpp
+	<iostream>
+	<math.h>
+	"vector.h"
+	"matrix.h"
+	"functions.h"
+
+1459127842 c:\users\syed\documents\coursematerials\winter'16\ece4960\lab3\symbolicc++3-3.35\headers\vector.h
+	<cassert>
+	<cmath>
+	<iostream>
+	<vector>
+	"identity.h"
+
+1459127843 c:\users\syed\documents\coursematerials\winter'16\ece4960\lab3\symbolicc++3-3.35\headers\identity.h
+	<iostream>
+	<cstdlib>
+	<complex>
+
+1459127843 c:\users\syed\documents\coursematerials\winter'16\ece4960\lab3\symbolicc++3-3.35\headers\matrix.h
+	<iostream>
+	<cmath>
+	<cassert>
+	<string>
+	<utility>
+	"identity.h"
+	"vector.h"
+
+1459725453 c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\functions.h
+	<iostream>
+	<vector>
+
+1462243356 source:c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\model.cpp
+	"Model.hpp"
+	<cmath>
+
+1462243356 c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\model.hpp
+
+1462992800 source:c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\spiceob.cpp
+	"spiceob.h"
+	<cmath>
+	<iostream>
+
+1462243356 c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\spiceob.h
+	<iostream>
+	<vector>
+	"Model.hpp"
+
+1462243357 source:c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\writemodel.cpp
+	"writeModel.hpp"
+
+1462243357 c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\writemodel.hpp
+	<stdio.h>
+	<iostream>
+	<fstream>
+	<iomanip>
+	<vector>
+
+1462994498 source:c:\users\syed\documents\coursematerials\winter'16\ece4960\cspice\main.cpp
+	<iostream>
+	<vector>
+	"spiceob.h"
+	<cmath>
+	"writeModel.hpp"
+	"functions.h"
 

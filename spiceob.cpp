@@ -84,7 +84,7 @@ vector< vector<double> > spiceob::bwdEuler(){
     double v1next,v2next,v1,v2;
     double t=0;
     vector< vector<double> > vec(rnk, vector<double>(numsteps));
-    
+
     if(!timeAdaptive){
         vec[0][0]=curValues[0];
         vec[1][0]=curValues[1];
@@ -219,20 +219,18 @@ vector< vector<double> > spiceob::rk34T(double tol1, double tol2){
     vector<double> kinit(rnk,0);
     vector< vector<double> > k(4,kinit);
     int totalSteps;
-    if(stepsize<1*pow(10,-9))
-        totalSteps=(stop/stepsize)+1;
-    else
-        totalSteps=stop/stepsize;
     if(timeAdaptive){
-        vector< vector<double> > results(totalSteps,kinit);
+        vector< vector<double> > results(1,kinit);
         vector<double> rk3;
         vector<double> rk4;
         vector<double> e;
         results[0]=curValues;
         double initstep=stepsize;
         double t=0;
+        results[0].push_back(t);
         //loop for RK4 method
-        for(int i=1;i<totalSteps;i++){
+        int i=1;
+        while(t<stop){
             //calculate ks for RK4
             k[0]=fevaluate(rnk, curValues, t);
 
@@ -259,9 +257,12 @@ vector< vector<double> > spiceob::rk34T(double tol1, double tol2){
             else
                 stepsize=stepsize;
 
-            results[i]=curValues;
 
+            results.push_back(kinit);
+            results[i]=curValues;
             t=t+stepsize;
+            results[i].push_back(t);
+            i=i+1;
         }
         curValues=results[0];
         stepsize=initstep;
@@ -324,13 +325,13 @@ double spiceob::norm(vector<double> input){
 }
 
 double spiceob::current(double t){
-    if ((fmod(t*pow(10,9),20))>=0 && (fmod(t*pow(10,9),20))<=1){
+    if ((fmod(t*pow(10,9),20))>=0 && (fmod(t*pow(10,9),20))<=0.5){
         return (pow(10,-4)*t);
     }
-    else if ((fmod(t*pow(10,9),20))>1 && (fmod(t*pow(10,9),20))<=10){
+    else if ((fmod(t*pow(10,9),20))>0.5 && (fmod(t*pow(10,9),20))<=20500){
         return (pow(10,-4));
     }
-    else if ((fmod(t*pow(10,9),20))>10 && (fmod(t*pow(10,9),20))<=11){
+    else if ((fmod(t*pow(10,9),20))>20500 && (fmod(t*pow(10,9),20))<=20500.5){
         return (pow(10,-4)*-t);
     }
     else return 0;
