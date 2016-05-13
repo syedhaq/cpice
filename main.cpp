@@ -63,7 +63,7 @@ int main(int argc, char *argv[]){
     //Find v2 after 20us and initiate parameter search
     bool found=false;
     int index=0;
-    double dh=.000000005;
+    double dh=.000008;
     double par[]={1,pow(10,-8),6*pow(10,-8)};
     vector<double>x1;
     vector<double>x2;

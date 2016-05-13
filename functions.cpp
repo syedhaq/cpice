@@ -44,7 +44,7 @@ double fevaluate(double par0,double par1,double par2,vector<double>x1,vector<dou
             //fvalue+=pow((((par0*pow(log(1+exp((par1*(x1[index]-par2))/(2*.026))),2)-par0*pow(log(1+exp((par1*(x1[index]-par2)-x2[index])/(2*.026))),2)))-(y[index])),2);
             fvalue+=pow(((par0*exp(-x1[index]/par1) + (x2[0]-par0)*exp(-x1[index]/par2))-y[index]),2);
 
-   cout<<"par0: "<<par0<<" par1: "<<par1<<" par2: "<<par2<<" f "<<fvalue<<endl;
+   //cout<<"par0: "<<par0<<" par1: "<<par1<<" par2: "<<par2<<" f "<<fvalue<<endl;
     }
 
     return fvalue;
