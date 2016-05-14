@@ -47,7 +47,7 @@ int main(int argc, char *argv[]){
 
     newton3(par,dh,x1,x2,y,x1.size());
     cout<<"\nTask3:\n";
-    cout<<"Two functions inhereted from previous assignments are newton3 and rk34T.";
+    cout<<"Two functions inherited from previous assignments are newton3 and rk34T.\n";
     return 0;
 }
 
