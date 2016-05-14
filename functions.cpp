@@ -171,12 +171,12 @@ void newton3(double par[],double dh,vector<double> x1,vector<double> x2,vector<d
       par1+=c*deltax[1];
       par2+=c*deltax[2];
 
-      cout<<"par0:"<<par0<<"par1:"<<par1<<"par2:"<<par2<<endl;
+      cout<<"a1: "<<par0<<" a2: "<<x2[0]-par0<<" τ1: "<<par1<<" τ2: "<<par2<<endl;
 }
       cout<<"Newton completed"<<endl;
-      cout<<"par0:"<<par0<<endl;
-      cout<<"par1:"<<par1<<endl;
-      cout<<"par2:"<<par2<<endl;
+      cout<<"a2/a1:"<<(x2[0]-par0)/par0<<endl;
+      cout<<"τ1:"<<par1<<endl;
+      cout<<"τ2:"<<par2<<endl;
       cout<<"||V||"<<fevaluate(par0,par1,par2,x1,x2,y,length)<<endl;
 }
 void secant3(double par[],double dh,vector<double> x1,vector<double> x2,vector<double> y,int length){
